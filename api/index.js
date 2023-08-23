@@ -12,6 +12,9 @@ app.use(cors({
     ]
 }));
 let db = "";
+const user = require('../Router/user');
+const otp = require('../Router/otp');
+const restaurant = require('../Router/restautrant');
 mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -20,7 +23,15 @@ mongoose.connect(db, {
 }).catch((er) => {
     console.log(er);
 });
-
+app.use('/user',(req, res) => {
+    user(req, res);
+});
+app.use('/restaurant', (req, res) => {
+    restaurant(req, res);
+});
+app.use('/otp', (req, res) => {
+    otp(req, res);
+});
 app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Welcome!!');
