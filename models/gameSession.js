@@ -12,7 +12,8 @@ const gameSessionSchema = mongoose.Schema({
         type: Object
     },
     date: {
-        type: Date
+        type: Date,
+        default: new Date()
     }
 });
 
