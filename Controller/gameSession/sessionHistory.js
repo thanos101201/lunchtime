@@ -1,5 +1,4 @@
 const gameSessionModel = require('../../models/gameSession');
-
 const filterSession = (user, resp1) => {
     return new Promise((resv, rejt) => {
         if(resp1.length > 0){
@@ -16,11 +15,9 @@ const filterSession = (user, resp1) => {
         }
     });
 }
-const activesession = (req, res) => {
-    const user = req.body.user;
-    gameSessionModel.find({
-        date: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
-    }).then(async (resp1) => {
+const history = (req, res) => {
+    const user = req.params.user;
+    gameSessionModel.find().then(async (resp1) => {
         if(resp1.length > 0){
             await filterSession(user, resp1).then((resp2) => {
                 res.status(200).send({
@@ -40,5 +37,4 @@ const activesession = (req, res) => {
         res.send(er1);
     });
 }
-
-module.exports = activesession;
+module.exports = history;

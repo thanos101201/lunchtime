@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const gameSessionSchema = mongoose.Schema({
-    sessionName: {
-        type: String,
-        required: true
-    },
     restaurantName: {
         type: String
     },
@@ -12,8 +8,8 @@ const gameSessionSchema = mongoose.Schema({
         type: Object
     },
     date: {
-        type: Date,
-        default: new Date()
+        type: String,
+        default: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
     }
 });
 

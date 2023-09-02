@@ -1,44 +1,31 @@
 const gameSessionModel = require('../../models/gameSession');
-const getName = async() => {
-    return await restaurantModel.find().then((resp1) => {
+const restaurantModel = require('../../models/restaurant');
+const getName = () => {
+    return restaurantModel.find().then((resp1) => {
         if(resp1.length > 0){
-            let ind = Math.floor(Math.random() * (resp1.length + 1));
-            return resp1[ind].name;
+            return resp1[Math.random()*(resp1.length - 1)];
         }
         else{
-            return "";
+            return "No restaurant"
         }
-    }).catch((er1) => {
-        return er1;
-    });
+    })
 }
-
 const post = async (req, res) => {
-
-    const user1 = req.body.user1;
-    const user2 = req.body.user2;
-    const user3 = req.body.user3;
+    const username = req.body.username;
+    let gamem = new gameSessionModel();
     let obj = {
-        [user1] : 0,
-        [user2] : 0,
-        [user3] : 0
+        [username]: 0
     };
-    try{
-        const sessionName = "";
-        let sessionm = new gameSessionModel();
-        sessionm.sessionName = sessionName;
-        sessionm.restaurantName = await getName();
-        sessionm.scores = obj;
-        sessionm.save().then((resp1) => {
-            res.status(200).send({
-                'message': 'Session created'
-            });
-        }).catch((er1) => {
-            res.send(er1);
-        })
-    }catch(ex){
-        res.send(ex);
-    }
+    gamem.scores = obj;
+    gamem.restaurantName = await getName();
+    gamem.save().then((resp1) => {
+        res.send({
+            'message': 'Session created',
+            'data': resp1
+        });
+    }).catch((er1) => {
+        res.send(er1);
+    });
 }
 
 module.exports = post;
