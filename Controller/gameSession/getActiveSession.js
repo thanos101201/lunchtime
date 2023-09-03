@@ -17,7 +17,7 @@ const filterSession = (user, resp1) => {
     });
 }
 const activesession = (req, res) => {
-    const user = req.body.user;
+    const user = req.params.user;
     gameSessionModel.find({
         date: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
     }).then(async (resp1) => {

@@ -11,7 +11,7 @@ app.use(cors({
         'DELETE'
     ]
 }));
-let db = "";
+let db = "mongodb+srv://pratik:pratik@cluster0.37xuxek.mongodb.net/?retryWrites=true&w=majority";
 const user = require('../Router/user');
 const otp = require('../Router/otp');
 const restaurant = require('../Router/restautrant');
@@ -50,4 +50,4 @@ app.use('/session', (req, res) => {
 });
 app.listen(3001, () => {
     console.log("Server started");
-})
+});

@@ -2,11 +2,13 @@ const e = require('cors');
 const gameSessionModel = require('../../models/gameSession');
 const join = (req, res) => {
     const id = req.body.id;
+    console.log(id);
     const username = req.body.username;
     gameSessionModel.find({
         _id: id
     }).then((resp1) => {
         if(resp1.length === 0){
+            console.log(resp1);
             res.status(204).send({
                 'message': 'Session not found'
             });

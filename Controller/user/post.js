@@ -6,6 +6,7 @@ const post = (req, res) => {
     userm.username = req.body.username;
     userm.name = req.body.name;
     userm.goal = req.body.goal;
+    userm.password = req.body.password;
     userm.save().then((resp1) => {
         res.status(200).send({
             'message': 'User added'

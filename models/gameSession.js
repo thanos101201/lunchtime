@@ -13,4 +13,6 @@ const gameSessionSchema = mongoose.Schema({
     }
 });
 
-const gameSessionModel = mongoose.model('gameSession',)
+const gameSessionModel = mongoose.model('gameSession', gameSessionSchema);
+
+module.exports = gameSessionModel;
