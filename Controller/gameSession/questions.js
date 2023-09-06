@@ -1,7 +1,7 @@
 const restaurantModel = require("../../models/restaurant");
 
 const questions = (req, res) => {
-    const name = req.body.name;
+    const name = req.params.id;
     restaurantModel.find({
         name: name
     }).then((resp1) => {

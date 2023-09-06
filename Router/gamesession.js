@@ -21,7 +21,7 @@ router.post('/join', (req, res) => {
 router.put('/', (req, res) => {
     put(req, res);
 });
-router.post('/question', (req, res) => {
+router.get('/question/:id', (req, res) => {
     questions(req,res);
 })
 module.exports = router;
