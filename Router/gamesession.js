@@ -5,6 +5,7 @@ const post = require('../Controller/gameSession/post');
 const put = require('../Controller/gameSession/put');
 const getActiveSession = require('../Controller/gameSession/getActiveSession');
 const join = require('../Controller/gameSession/joinSession');
+const questions = require('../Controller/gameSession/questions');
 router.get('/', (req, res) => {
     get(req, res);
 });
@@ -20,4 +21,7 @@ router.post('/join', (req, res) => {
 router.put('/', (req, res) => {
     put(req, res);
 });
+router.post('/question', (req, res) => {
+    questions(req,res);
+})
 module.exports = router;

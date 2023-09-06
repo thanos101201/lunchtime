@@ -1,4 +1,37 @@
 const gameSessionModel = require('../../models/gameSession');
+const restaurantModel = require('../../models/restaurant');
+
+const getOptions = (name) => {
+    return new Promise((resv, rejt) => {
+        restaurantModel.find({
+            name: name
+        }).then((resp1) => {
+            if(resp1.length > 0){
+                let dish = [];
+                if(resp1[0].dishes.length > 0){
+                    const indexes = [];
+                    while (indexes.length < 3) {
+                        const randomIndex = Math.floor(Math.random() * resp1[0].dishes.length);
+                        // Ensure the selected index is unique
+                        if (!indexes.includes(randomIndex)) {
+                            dish.push(resp1[0].dishes[randomIndex]);
+                            indexes.push(randomIndex);
+                        }
+                    }
+                    resv(dish);
+                }
+                else{
+                    rejt("No dishes available")
+                }
+            }
+            else{
+                rejt("Restaurant not registered")
+            }
+        }).catch((er1) => {
+            rejt(er1);
+        })
+    })
+}
 
 const put = (req, res) => {
     const user = req.body.user;
@@ -19,10 +52,18 @@ const put = (req, res) => {
                 _id: session
             }, {
                 scores: scores
-            }).then((resp2) => {
-                res.status(200).send({
-                    'message': 'Score updated'
-                });
+            }).then(async (resp2) => {
+                await getOptions(resp1.restaurantName).then((resp3) => {
+                    res.status(200).send({
+                        'message': 'Option is here',
+                        'data': resp3
+                    });
+                }).catch((er) => {
+                    res.send(er);
+                })
+                // res.status(200).send({
+                //     'message': 'Score updated'
+                // });
             }).catch((er2) => {
                 res.send(er2);
             });

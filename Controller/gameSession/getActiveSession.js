@@ -21,8 +21,10 @@ const activesession = (req, res) => {
     gameSessionModel.find({
         date: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
     }).then(async (resp1) => {
+        console.log(resp1);
         if(resp1.length > 0){
             await filterSession(user, resp1).then((resp2) => {
+                console.log(resp2);
                 res.status(200).send({
                     'message': 'Session is here',
                     'data': resp2
