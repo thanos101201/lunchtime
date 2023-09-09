@@ -7,6 +7,10 @@ const gameSessionSchema = mongoose.Schema({
     scores: {
         type: Object
     },
+    count: {
+        type: Number,
+        default: 0
+    },
     date: {
         type: String,
         default: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()

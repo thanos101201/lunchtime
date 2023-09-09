@@ -47,13 +47,15 @@ const put = (req, res) => {
         }
         else{
             let scores = resp1[0].scores;
+            let cnt = resp1[0].count;
             scores[user] += score;
             gameSessionModel.updateOne({
                 _id: session
             }, {
-                scores: scores
+                scores: scores,
+                count: cnt + 1
             }).then(async (resp2) => {
-                await getOptions(resp1.restaurantName).then((resp3) => {
+                await getOptions(resp1[0].restaurantName).then((resp3) => {
                     res.status(200).send({
                         'message': 'Option is here',
                         'data': resp3

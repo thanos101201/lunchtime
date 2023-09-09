@@ -5,7 +5,7 @@ const post = require('../Controller/user/post');
 const login = require('../Controller/user/login');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/:email', (req, res) => {
     get(req, res);
 });
 

@@ -9,7 +9,7 @@ const get = (req, res) => {
         }
         else{
             res.send({
-                'message': 'USer is here',
+                'message': 'User is here',
                 'data': resp1
             });
         }
