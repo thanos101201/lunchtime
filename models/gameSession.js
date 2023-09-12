@@ -14,6 +14,9 @@ const gameSessionSchema = mongoose.Schema({
     date: {
         type: String,
         default: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
+    },
+    counts: {
+        type: Object
     }
 });
 

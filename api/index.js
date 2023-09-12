@@ -18,6 +18,10 @@ const restaurant = require('../Router/restautrant');
 const invitation = require('../Router/invite');
 const gameSession = require('../Router/gamesession');
 const polling = require('../Router/polling');
+const getUsers = require('../Controller/user/getUsers');
+const cron = require('node-cron');
+const mail = require('../Controller/user/mails');
+const userSessions = require('../Controller/user/sessions');
 mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -27,9 +31,18 @@ mongoose.connect(db, {
     console.log(er);
 });
 app.use(express.json());
+cron.schedule('0 8 * * *', () => {
+    mail();
+});
 app.get('/', (req, res) => {
     res.send('Welcome!!');
 });
+app.get('/users', (req, res) => {
+    getUsers(req, res);
+});
+app.get('/sesions/:id', (req,res) => {
+    userSessions(req, res);
+})
 app.use('/user',(req, res) => {
     user(req, res);
 });

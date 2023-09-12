@@ -22,19 +22,26 @@ const join = (req, res) => {
             }
             else{
                 let obj = {};
+                let cnt = {};
                 if(j.length === 2){
                     obj[username] = 0;
                     obj[j[0]] = resp1[0].scores[j[0]];
                     obj[j[1]] = resp1[0].scores[j[1]];
+                    cnt[username] = 0;
+                    cnt[j[0]] = resp1[0].counts[j[0]];
+                    cnt[j[1]] = resp1[0].counts[j[1]];
                 }
                 else if(j.length === 1){
                     obj[username] = 0;
                     obj[j[0]] = resp1[0].scores[j[0]];
+                    cnt[username] = 0;
+                    cnt[j[0]] = resp1[0].counts[j[0]];
                 }
                 gameSessionModel.updateOne({
                     _id: id
                 }, {
-                    scores: obj
+                    scores: obj,
+                    counts: cnt
                 }).then((resp1) => {
                     res.status(200).send({
                         'message': 'Joined session'

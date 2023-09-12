@@ -47,13 +47,14 @@ const put = (req, res) => {
         }
         else{
             let scores = resp1[0].scores;
-            let cnt = resp1[0].count;
+            let counts = resp1[0].counts;
             scores[user] += score;
+            counts[user] += 1;
             gameSessionModel.updateOne({
                 _id: session
             }, {
                 scores: scores,
-                count: cnt + 1
+                counts: counts
             }).then(async (resp2) => {
                 await getOptions(resp1[0].restaurantName).then((resp3) => {
                     res.status(200).send({

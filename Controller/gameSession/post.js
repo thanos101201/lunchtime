@@ -45,7 +45,11 @@ const post = async (req, res) => {
     let obj = {
         [username]: 0
     };
+    let cnt = {
+        [username]: 0
+    }
     gamem.scores = obj;
+    gamem.counts = cnt;
     let name = await getName();
     gamem.restaurantName = name;
     gamem.save().then((resp1) => {

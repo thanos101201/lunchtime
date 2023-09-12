@@ -10,8 +10,9 @@ router.get('/:email', (req, res) => {
 });
 
 router.get('/users',(req, res) => {
+    console.log("Namaste");
     getUsers(req, res);
-})
+});
 router.post('/login', (req, res) => {
     login(req, res);
 })

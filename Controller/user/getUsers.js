@@ -1,7 +1,9 @@
 const userModel = require("../../models/user");
 
 const get = (req, res) => {
+    console.log("Hello");
     userModel.find().then((resp1) => {
+        console.log(resp1);
         if(resp1.length === 0){
             res.status(204).send({
                 'message': 'User not found'
