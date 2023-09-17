@@ -30,6 +30,7 @@ const mail = async () => {
     userModel.find().then((resp1) => {
         if(resp1.length > 0){
             resp1.map((e) => {
+                console.log(e.email);
                 send(e.email);
             })
         }
