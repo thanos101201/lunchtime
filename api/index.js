@@ -31,9 +31,13 @@ mongoose.connect(db, {
     console.log(er);
 });
 app.use(express.json());
-cron.schedule('0 8 * * *', () => {
-    mail();
-});
+app.get('/cron', async(req, res) => {
+    // cron.schedule('0 8 * * *', () => {
+    //     mail();
+    // });
+    await mail();
+    res.send("Namaste");
+})
 app.get('/', (req, res) => {
     res.send('Welcome!!');
 });

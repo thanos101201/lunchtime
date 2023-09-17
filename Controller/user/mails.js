@@ -26,7 +26,7 @@ const send = (email) => {
         }
     });
 }
-const mail = () => {
+const mail = async () => {
     userModel.find().then((resp1) => {
         if(resp1.length > 0){
             resp1.map((e) => {
