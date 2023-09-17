@@ -31,11 +31,11 @@ mongoose.connect(db, {
     console.log(er);
 });
 app.use(express.json());
-app.get('/cron', async(req, res) => {
+app.get('/cron', (req, res) => {
     // cron.schedule('0 8 * * *', () => {
     //     mail();
     // });
-    await mail();
+    mail();
     res.send("Namaste");
 })
 app.get('/', (req, res) => {
