@@ -22,6 +22,8 @@ const getUsers = require('../Controller/user/getUsers');
 const cron = require('node-cron');
 const mail = require('../Controller/user/mails');
 const userSessions = require('../Controller/user/sessions');
+const url = require('../Controller/user/url');
+const login = require('../Controller/user/login');
 mongoose.connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -31,16 +33,13 @@ mongoose.connect(db, {
     console.log(er);
 });
 app.use(express.json());
-app.get('/cron', (req, res) => {
-    // cron.schedule('0 8 * * *', () => {
-    //     mail();
-    // });
-    mail();
-    res.send("Namaste");
-})
+
 app.get('/', (req, res) => {
     res.send('Welcome!!');
 });
+app.get('/cron', (req, res) => {
+    mail(req, res);
+})
 app.get('/users', (req, res) => {
     getUsers(req, res);
 });
@@ -48,8 +47,16 @@ app.get('/sesions/:id', (req,res) => {
     userSessions(req, res);
 })
 app.use('/user',(req, res) => {
+    console.log("Is it ok");
     user(req, res);
 });
+app.get('/url',(req, res) => {
+    url(req, res);
+});
+app.get('/login', (req, res) => {
+    console.log("Here welcome");
+    login(req, res);
+})
 app.use('/restaurant', (req, res) => {
     restaurant(req, res);
 });

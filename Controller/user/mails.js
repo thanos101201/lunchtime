@@ -26,12 +26,16 @@ const send = (email) => {
         }
     });
 }
-const mail = async () => {
+const mail = async (req, res) => {
     userModel.find().then((resp1) => {
         if(resp1.length > 0){
-            resp1.map((e) => {
+            Promise.all(resp1.map((e) => {
                 console.log(e.email);
                 send(e.email);
+            })).then((resp2) => {
+                res.status(200).send("Namaste");
+            }).catch((er2) => {
+                res.status(500).send(er2);
             })
         }
     }).catch((er) => {
