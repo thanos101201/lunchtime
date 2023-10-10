@@ -10,6 +10,30 @@ const getName = () => {
         }
     })
 }
+
+const checkUserSession = async (username) => {
+    return await gameSessionModel.find({
+        date: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
+    }).then((resp1) => {
+        if(resp1.length === 0){
+            return true;
+        }
+        let ar = resp1.filter((e) => {
+            if(Object.keys(e).indexOf(username) !== -1){
+                return true;
+            }
+            return false;
+        });
+
+        if(ar.length > 0){
+            return false;
+        }
+        return true;
+    }).catch((er) => {
+        return er;
+    })
+}
+
 const getOptions = (name) => {
     return new Promise((resv, rejt) => {
         restaurantModel.find({
@@ -42,32 +66,41 @@ const getOptions = (name) => {
 const post = async (req, res) => {
     const username = req.body.username;
     let gamem = new gameSessionModel();
-    let obj = {
-        [username]: 0
-    };
-    let cnt = {
-        [username]: 0
-    }
-    gamem.scores = obj;
-    gamem.counts = cnt;
-    let name = await getName();
-    gamem.restaurantName = name;
-    gamem.save().then((resp1) => {
-        // getOptions(name).then((resp2) => {
-        //     res.status(200).send({
-        //         'message': 'Options are here',
-        //         'data': resp2
-        //     });
-        // }).catch((er2) => {
-        //     res.send(er2);
-        // });
-        res.status(200).send({
-            'message': 'Session created',
-            'data': resp1
+    let chk = await checkUserSession(username)
+    if(chk){
+        let obj = {
+            [username]: 0
+        };
+        let cnt = {
+            [username]: 0
+        }
+        gamem.scores = obj;
+        gamem.counts = cnt;
+        let name = await getName();
+        gamem.restaurantName = name;
+        gamem.save().then((resp1) => {
+            // getOptions(name).then((resp2) => {
+            //     res.status(200).send({
+            //         'message': 'Options are here',
+            //         'data': resp2
+            //     });
+            // }).catch((er2) => {
+            //     res.send(er2);
+            // });
+            res.status(200).send({
+                'message': 'Session created',
+                'data': resp1
+            });
+        }).catch((er1) => {
+            res.send(er1);
         });
-    }).catch((er1) => {
-        res.send(er1);
-    });
+    }
+    else{
+        res.status(403).send({
+            'message': 'Session already present',
+            'data': chk
+        })
+    }
 }
 
 module.exports = post;
