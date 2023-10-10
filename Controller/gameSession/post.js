@@ -15,17 +15,19 @@ const checkUserSession = async (username) => {
     return await gameSessionModel.find({
         date: "" + new Date().getDate() + " : " + new Date().getMonth() + " : " + new Date().getFullYear()
     }).then((resp1) => {
+        // console.log(`Resp1 ${resp1.length}`);
         if(resp1.length === 0){
             return true;
         }
         let ar = resp1.filter((e) => {
-            if(Object.keys(e).indexOf(username) !== -1){
+            if(Object.keys(e.scores).indexOf(username) !== -1){
                 return true;
             }
             return false;
         });
-
+        // console.log(ar);
         if(ar.length > 0){
+            // console.log(`Ar length ${ar.length}`);
             return false;
         }
         return true;
@@ -67,6 +69,7 @@ const post = async (req, res) => {
     const username = req.body.username;
     let gamem = new gameSessionModel();
     let chk = await checkUserSession(username)
+    console.log(chk);
     if(chk){
         let obj = {
             [username]: 0
